@@ -8,8 +8,21 @@ const middlewares = [
     createLogger(),
 ];
 
+const defaultState = {
+    openWeather: {
+        isFetching: false,
+    },
+    apixu: {
+        isFetching: false,
+    },
+    settings: {
+        units: 'metric',
+    },
+};
+
 export default createStore(
     rootReducer,
+    defaultState,
     compose(
         applyMiddleware(...middlewares),
         window.devToolsExtension ? window.devToolsExtension() : f => f,

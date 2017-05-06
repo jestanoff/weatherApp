@@ -33,16 +33,16 @@ class App extends Component {
 App.propTypes = {
     dispatch: PropTypes.func.isRequired,
     city: PropTypes.string.isRequired,
-    isFetching: PropTypes.bool,
+    isFetching: PropTypes.bool.isRequired,
     // coords: PropTypes.objectOf(PropTypes.number).isRequired,
     // units: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => {
-    const isOpenWeatherAvailable = Object.keys(state.openWeather.data).length > 0;
-    const isFetching = state.openWeather.isFetching;
-    const { coords, units } = state;
-    const city = isOpenWeatherAvailable ? state.openWeather.data.name : 'Loading';
+    const isOpenWeatherAvailable = Object.keys(state.openWeather.data || {}).length > 0;
+    const isFetching = state.openWeather.isFetching || state.apixu.isFetching;
+    const { coords, units } = state.settings;
+    const city = isOpenWeatherAvailable ? state.openWeather.current.name : '-';
 
     return {
         isFetching,

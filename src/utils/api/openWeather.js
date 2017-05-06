@@ -1,20 +1,18 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://api.openweathermap.org/data/2.5';
-
 class OpenWeatherApi {
     constructor(units, coords) {
         Object.assign(this, {
             apiKey: '5511b92677ed43a19313731b3e96e27a',
-            path: '/weather',
+            baseURL: 'http://api.openweathermap.org/data/2.5',
             units,
             coords,
         });
     }
 
-    getCurrentWeather() {
+    fetchData(type) {
         return axios({
-            url: this.path,
+            url: this.baseURL + type,
             method: 'get',
             params: {
                 units: this.units,
@@ -23,7 +21,14 @@ class OpenWeatherApi {
                 appid: this.apiKey,
             },
         });
-        // .get(`${this.path}?q=${this.city},${this.country}&appid=${this.apiKey}&units=metric`);
+    }
+
+    getCurrentWeather() {
+        return this.fetchData('/weather');
+    }
+
+    getForecastWeather() {
+        return this.fetchData('/forecast');
     }
 }
 
