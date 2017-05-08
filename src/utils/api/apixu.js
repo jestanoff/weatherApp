@@ -18,7 +18,7 @@ class ApixuApi {
             params: {
                 q: `${this.coords.latitude},${this.coords.longitude}`,
                 key: this.apiKey,
-                day: this.forecastDays,
+                days: this.forecastDays,
             },
         });
     }

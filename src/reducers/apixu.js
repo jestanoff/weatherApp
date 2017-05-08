@@ -5,7 +5,10 @@ import {
 } from '../actions';
 
 const initialState = {
+    current: null,
+    forecast: null,
     error: null,
+    isFetching: false,
 };
 
 export default (state = initialState, { type, payload, error }) => {
