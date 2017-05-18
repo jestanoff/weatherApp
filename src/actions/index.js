@@ -14,6 +14,8 @@ export const FETCH_APIXU_ERROR = 'FETCH_APIXU_ERROR';
 export const GET_GEOLOCATION_SUCCESS = 'GET_GEOLOCATION_SUCCESS';
 export const GET_GEOLOCATION_ERROR = 'GET_GEOLOCATION_ERROR';
 
+export const SET_UNITS = 'SET_UNITS';
+
 export const fetchOpenWeather = () => ({ type: FETCH_OPEN_WEATHER });
 export const fetchOpenWeatherCurrentSuccess = data => (
     { type: FETCH_OPEN_WEATHER_CURRENT_SUCCESS, payload: data }
@@ -36,25 +38,26 @@ export const fetchApixuError = error => (
     { type: FETCH_APIXU_ERROR, error }
 );
 
-export const getGeolocationSuccess = coords => (
-    { type: GET_GEOLOCATION_SUCCESS, payload: coords }
-);
-export const getGeolocationError = () => ({ type: GET_GEOLOCATION_ERROR });
+export const getGeolocationSuccess = coords => ({ type: GET_GEOLOCATION_SUCCESS, payload: coords });
+export const getGeolocationError = error => ({ type: GET_GEOLOCATION_ERROR, payload: error });
+export const setUnits = unit => ({ type: SET_UNITS, unit });
 
 export function fetchWeather(units, coords) {
     return (dispatch) => {
         const openWeather = new OpenWeatherAPI(units, coords);
         const apixu = new ApixuAPI(coords);
 
-        dispatch(fetchOpenWeather());
-        openWeather.getCurrentWeather()
-            .then(response => response.data)
-            .then(data => dispatch(fetchOpenWeatherCurrentSuccess(data)))
-            .catch(error => dispatch(fetchOpenWeatherCurrentError(error)));
-        openWeather.getForecastWeather()
-            .then(response => response.data)
-            .then(data => dispatch(fetchOpenWeatherForecastSuccess(data)))
-            .catch(error => dispatch(fetchOpenWeatherForecastError(error)));
+        if (coords) {
+            dispatch(fetchOpenWeather());
+            openWeather.getCurrentWeather()
+                .then(response => response.data)
+                .then(data => dispatch(fetchOpenWeatherCurrentSuccess(data)))
+                .catch(error => dispatch(fetchOpenWeatherCurrentError(error)));
+            openWeather.getForecastWeather()
+                .then(response => response.data)
+                .then(data => dispatch(fetchOpenWeatherForecastSuccess(data)))
+                .catch(error => dispatch(fetchOpenWeatherForecastError(error)));
+        }
 
         dispatch(fetchApixu());
         apixu.fetchData()
@@ -64,18 +67,20 @@ export function fetchWeather(units, coords) {
     };
 }
 
-export const getGeolocation = () => {
-    if (navigator.geolocation) {
-        return (dispatch, getState) => {
+export const getGeolocation = () =>
+    (dispatch, getState) => {
+        if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 ({ coords: { latitude, longitude } }) => {
                     dispatch(getGeolocationSuccess({ latitude, longitude }));
                     dispatch(fetchWeather(getState().settings.units, getState().settings.coords));
                 },
-                () => dispatch(getGeolocationError()),
+                (error) => {
+                    dispatch(fetchWeather(getState().settings.units, getState().settings.coords));
+                    dispatch(getGeolocationError(error));
+                },
             );
-        };
-    }
-    // TODO: implement geolocation by IP
-    return 'GEO_BY_IP';
-};
+        }
+        // Get geolocation by IP
+        dispatch(fetchWeather(getState().settings.units));
+    };

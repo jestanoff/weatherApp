@@ -1,14 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Location = ({ city }) => (
-    <section className='location-container'>
-        { city }
+const Location = ({ country, name, region }) => (
+    <section className='location__container'>
+        <span className='location__name'>{ name }</span>
+        <span className='location__region'>{ region }</span>
+        <span className='location__country'>{ country }</span>
     </section>
 );
 
 Location.propTypes = {
-    city: PropTypes.string.isRequired,
+    country: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    region: PropTypes.string.isRequired,
 };
 
 export default Location;

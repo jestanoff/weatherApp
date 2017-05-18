@@ -15,12 +15,12 @@ class App extends Component {
     }
 
     render() {
-        const { city, isFetching, isDataAvailable } = this.props;
+        const { country, name, region, isFetching, isDataAvailable } = this.props;
         return (
             <section className='app-container'>
                 { isFetching && <div className='loading-spinner'>Loading...</div> }
                 <header>
-                    <Location city={ city } />
+                    <Location country={ country } name={ name } region={ region } />
                     <Search />
                 </header>
                 <nav>
@@ -36,17 +36,19 @@ class App extends Component {
 
 App.propTypes = {
     dispatch: PropTypes.func.isRequired,
-    city: PropTypes.string.isRequired,
+    country: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    region: PropTypes.string.isRequired,
     isFetching: PropTypes.bool.isRequired,
     isDataAvailable: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => {
-    const isOpenWeatherAvailable = Object.keys(state.openWeather.current || {}).length > 0;
+    // const isOpenWeatherAvailable = Object.keys(state.openWeather.current || {}).length > 0;
     const isApixuAvailable = Object.keys(state.apixu.current || {}).length > 0;
     const isFetching = state.openWeather.isFetching || state.apixu.isFetching;
     const { coords, units } = state.settings;
-    const city = isOpenWeatherAvailable ? state.openWeather.current.name : '-';
+    const name = isApixuAvailable ? state.apixu.location.name : '-';
     const isDataAvailable = isApixuAvailable;
 
     return {
@@ -54,7 +56,7 @@ const mapStateToProps = (state) => {
         isDataAvailable,
         coords,
         units,
-        city,
+        name,
     };
 };
 

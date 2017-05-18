@@ -6,19 +6,31 @@ class ApixuApi {
             apiKey: 'a164c9f6b68a499e858214958170605',
             baseURL: 'https://api.apixu.com/v1/',
             forecastDays: 5,
-            json: 'forecast.json',
+            jsonForecast: 'forecast.json',
+            jsonSearch: 'search.json',
             coords,
         });
     }
 
     fetchData() {
+        const q = this.coords ? `${this.coords.latitude},${this.coords.longitude}` : 'auto:ip';
         return axios({
-            url: this.baseURL + this.json,
+            url: this.baseURL + this.jsonForecast,
             method: 'get',
             params: {
-                q: `${this.coords.latitude},${this.coords.longitude}`,
+                q,
                 key: this.apiKey,
                 days: this.forecastDays,
+            },
+        });
+    }
+
+    searchAutocomplete(term) {
+        return axios({
+            url: this.baseURL + this.jsonSearch,
+            method: 'get',
+            params: {
+                q: term,
             },
         });
     }

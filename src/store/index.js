@@ -9,15 +9,10 @@ const middlewares = [
 ];
 
 const defaultState = {
-    openWeather: {
-        isFetching: false,
-    },
-    apixu: {
-        isFetching: false,
-    },
-    settings: {
-        units: 'metric',
-    },
+    openWeather: {},
+    apixu: {},
+    settings: {},
+    searchItems: [],
 };
 
 export default createStore(
