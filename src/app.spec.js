@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import { App } from './App';
 
 describe('<App />', () => {
@@ -13,7 +13,7 @@ describe('<App />', () => {
             isDataAvailable: false,
             getGeolocation,
         };
-        const wrapper = mount(<App { ...props } />);
+        const wrapper = shallow(<App { ...props } />);
         expect(wrapper).toBeDefined();
         expect(getGeolocation).toHaveBeenCalledTimes(1);
     });
