@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import Location from './components/Location';
 import Search from './components/Search';
 import ForecastNav from './containers/ForecastNav';
@@ -10,8 +11,7 @@ import ForecastSection from './containers/ForecastSection';
 
 class App extends Component {
     componentWillMount() {
-        const { dispatch } = this.props;
-        dispatch(getGeolocation());
+        this.props.getGeolocation();
     }
 
     render() {
@@ -35,7 +35,7 @@ class App extends Component {
 }
 
 App.propTypes = {
-    dispatch: PropTypes.func.isRequired,
+    getGeolocation: PropTypes.func.isRequired,
     country: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     region: PropTypes.string.isRequired,
@@ -60,4 +60,12 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(App);
+function mapDispatchToProps(dispatch) {
+    return {
+        getGeolocation: bindActionCreators(getGeolocation, dispatch),
+    };
+}
+
+export { App };
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
