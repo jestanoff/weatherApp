@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 const CurrentWeatherSection = ({
-    cloud,
     feelsLike,
     humidity,
     icon,
@@ -14,19 +13,17 @@ const CurrentWeatherSection = ({
     windSpeed,
 }) => (
     <section className='current-weather'>
-        <div className='cloud'>Cloud: { cloud }</div>
-        <div className='feelsLike'>Feels like: { feelsLike }</div>
-        <div className='humidity'>Humidity: { humidity }</div>
+        <div className='feelsLike'>Feels like: { feelsLike }° C</div>
+        <div className='temp'>Temperature: { temp }° C</div>
+        <div className='humidity'>Humidity: { humidity }%</div>
         <div className='icon'><img src={ icon } alt='weather icon' /></div>
-        <div className='text'>{ text }</div>
-        <div className='temp'>Temperature: { temp }</div>
+        <div className='text'>Visability: { text }</div>
         <div className='windDir'>Wind direction: { windDir }</div>
-        <div className='windSpeed'>Wing speed: { windSpeed }</div>
+        <div className='windSpeed'>Wing speed: { windSpeed }mph</div>
     </section>
 );
 
 CurrentWeatherSection.propTypes = {
-    cloud: PropTypes.number.isRequired,
     feelsLike: PropTypes.number.isRequired,
     humidity: PropTypes.number.isRequired,
     icon: PropTypes.string.isRequired,
@@ -38,7 +35,6 @@ CurrentWeatherSection.propTypes = {
 
 const mapStateToProps = state => (
     {
-        cloud: state.apixu.current.cloud,
         icon: state.apixu.current.condition.icon,
         text: state.apixu.current.condition.text,
         feelsLike: state.apixu.current.feelslike_c,

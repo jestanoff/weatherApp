@@ -1,24 +1,51 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-// import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import ForecastHourColumn from '../components/ForecastHourColumn';
 
-const ForecastSection = ({ match }) => (
-    <section className='forecast-main'>
-        <h1>Forecast Weather</h1>
-        day: { match.params.day }
-    </section>
-);
+const ForecastSection = ({ hours, sunrise, sunset }) => {
+    const ForecastHourColumnItems = () =>
+        hours.map((hour) => {
+            const props = {
+                key: hour.time_epoch,
+                hour: (new Date(hour.time)).getHours(),
+                icon: hour.condition.icon,
+                temp: Math.round(hour.temp_c),
+                wind: Math.round(hour.wind_kph),
+                windDirection: hour.wind_dir,
+            };
+            return <ForecastHourColumn { ...props } />;
+        });
 
-// ForecastSection.propTypes = {
-//     id: PropTypes.number.isRequired,
-// };
+    return (
+        <section className='forecast-main'>
+            <div className='forecast-main__day-info'>
+                <span className='forecast-main__sunrise'>sunrise: { sunrise }</span>
+                <span className='forecast-main__sunset'>sunset: { sunset }</span>
+            </div>
+            <section className='forecast-graph'>
+                { ForecastHourColumnItems() }
+            </section>
+        </section>
+    );
+};
 
-// const mapStateToProps = (state, ownProps) => {
-//     console.log(ownProps);
-//     const day = ownProps.match.params.id;
-//     return {
-//         id: day,
-//     };
-// };
+ForecastSection.propTypes = {
+    hours: PropTypes.array.isRequired,
+    sunrise: PropTypes.string.isRequired,
+    sunset: PropTypes.string.isRequired,
+};
 
-export default ForecastSection;
+const mapStateToProps = (state, ownProps) => {
+    const day = ownProps.match.params.day;
+    const hours = state.apixu.forecast.forecastday[day].hour.filter(hour => (
+        hour.time_epoch > Date.now() / 1000
+    ));
+    return {
+        hours,
+        sunrise: state.apixu.forecast.forecastday[day].astro.sunrise,
+        sunset: state.apixu.forecast.forecastday[day].astro.sunset,
+    };
+};
+
+export default connect(mapStateToProps)(ForecastSection);

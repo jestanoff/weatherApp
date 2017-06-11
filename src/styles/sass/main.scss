@@ -4,20 +4,24 @@ body {
 
 #app-root {
     margin: 2em auto;
-    width: 600px;
+    width: 976x;
     box-shadow: 0 0 4px rgba(0, 0, 0, .1);
     border: 1px solid #ddd;
-    padding: 1em;
+    padding: 1em 0;
     position: relative;
 }
 
 header {
     display: flex;
     flex-direction: row;
+}
 
-    section {
-        width: 50%;
-    }
+.location__container {
+    width: 70%;
+}
+
+.search__container {
+    width: 30%;
 }
 
 .loading-spinner {
@@ -53,4 +57,28 @@ header {
     padding: 0.5em;
     text-align: center;
     text-decoration: none;
+}
+
+.forecast-graph {
+    display: flex;
+    flex-direction: row;
+    font-size: 11px;
+}
+
+.forecast-hour-column {
+    text-align: center;
+    border-right: 1px solid gray;
+    padding: 0 3px;
+
+    &:last-child {
+        border: none;
+    }
+}
+
+.forecast-hour-column__icon {
+    width: 100%;
+
+    img {
+        width: 32px;
+    }
 }
