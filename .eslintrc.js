@@ -25,6 +25,7 @@ module.exports = {
     "jsx-a11y/no-static-element-interactions" : ["off"],
     "react/no-array-index-key": ["off"],
     'jsx-quotes': ["error", "prefer-single"],
+    "import/no-named-as-default": ["off"],
     /* Advanced Rules*/
     "no-unused-expressions": "warn",
     "no-useless-concat": "warn",

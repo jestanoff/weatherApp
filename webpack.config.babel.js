@@ -76,6 +76,7 @@ export default {
     ],
     context: __dirname,
     devServer: {
+        // historyApiFallback: true, // route all pages to '/' for react-router-dom
         contentBase: path.join(srcDir, './templates'),
         compress: true,
         hot: true,

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import uuid from 'uuid/v4';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import ForecastNavItem from '../components/ForecastNavItem';
 
 const ForecastNav = ({ forecastDays, forecastDay }) => {
@@ -9,11 +9,12 @@ const ForecastNav = ({ forecastDays, forecastDay }) => {
         { length: forecastDays },
         (_, i) =>
             <ForecastNavItem
-              key={ uuid() }
+              key={ forecastDay[i].date_epoch }
               minTemp={ forecastDay[i].day.mintemp_c }
               maxTemp={ forecastDay[i].day.maxtemp_c }
               icon={ forecastDay[i].day.condition.icon }
               date={ forecastDay[i].date }
+              day={ i }
             />,
     );
     return (
@@ -34,4 +35,4 @@ const mapStateToProps = state => ({
     forecastDay: state.apixu.forecast.forecastday,
 });
 
-export default connect(mapStateToProps)(ForecastNav);
+export default withRouter(connect(mapStateToProps)(ForecastNav));
