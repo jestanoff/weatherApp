@@ -2,13 +2,24 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
-#app-root {
+.app-container {
     margin: 2em auto;
     width: 938px;
     box-shadow: 0 0 4px rgba(0, 0, 0, .1);
     border: 1px solid #ddd;
     padding: 1em 0;
     position: relative;
+}
+
+.app-background {
+    background: url('../../images/backgorund_1920x1080.jpg') no-repeat 50% 50% fixed;
+    background-size: cover;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: -1;
 }
 
 header {

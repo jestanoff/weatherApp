@@ -17,20 +17,23 @@ export class App extends Component {
     render() {
         const { country, name, region, isFetching, isDataAvailable } = this.props;
         return (
-            <section className='app-container'>
-                { isFetching && <div className='loading-spinner'>Loading...</div> }
-                <header>
-                    <Location country={ country } name={ name } region={ region } />
-                    <Search />
-                </header>
-                <nav>
-                    { isDataAvailable && <ForecastNav forecastDays={ 5 } /> }
-                </nav>
-                { isDataAvailable && <div className='main-container'>
-                    <Route path='/' component={ CurrentWeatherSection } />
-                    <Route path='/day=:day' component={ ForecastSection } />
-                </div> }
-            </section>
+            <div>
+                <section className='app-container'>
+                    { isFetching && <div className='loading-spinner'>Loading...</div> }
+                    <header>
+                        <Location country={ country } name={ name } region={ region } />
+                        <Search />
+                    </header>
+                    <nav>
+                        { isDataAvailable && <ForecastNav forecastDays={ 5 } /> }
+                    </nav>
+                    { isDataAvailable && <div className='main-container'>
+                        <Route path='/' component={ CurrentWeatherSection } />
+                        <Route path='/day=:day' component={ ForecastSection } />
+                    </div> }
+                </section>
+                <div className='app-background' />
+            </div>
         );
     }
 }
