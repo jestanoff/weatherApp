@@ -1,4 +1,4 @@
-import OpenWeatherAPI from '../utils/api/openWeather';
+// import OpenWeatherAPI from '../utils/api/openWeather';
 import ApixuAPI from '../utils/api/apixu';
 
 export const FETCH_OPEN_WEATHER = 'FETCH_OPEN_WEATHER';
@@ -44,9 +44,10 @@ export const setUnits = unit => ({ type: SET_UNITS, unit });
 
 export function fetchWeather(units, coords) {
     return (dispatch) => {
-        const openWeather = new OpenWeatherAPI(units, coords);
+        // const openWeather = new OpenWeatherAPI(units, coords);
         const apixu = new ApixuAPI(coords);
 
+        /* Disable openweather for now
         if (coords) {
             dispatch(fetchOpenWeather());
             openWeather.getCurrentWeather()
@@ -57,7 +58,7 @@ export function fetchWeather(units, coords) {
                 .then(response => response.data)
                 .then(data => dispatch(fetchOpenWeatherForecastSuccess(data)))
                 .catch(error => dispatch(fetchOpenWeatherForecastError(error)));
-        }
+        } */
 
         dispatch(fetchApixu());
         apixu.fetchData()
@@ -80,7 +81,8 @@ export const getGeolocation = () =>
                     dispatch(getGeolocationError(error));
                 },
             );
+        } else {
+            // Get geolocation by IP
+            dispatch(fetchWeather(getState().settings.units));
         }
-        // Get geolocation by IP
-        dispatch(fetchWeather(getState().settings.units));
     };

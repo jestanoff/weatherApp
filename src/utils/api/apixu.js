@@ -5,7 +5,7 @@ class ApixuApi {
         Object.assign(this, {
             apiKey: 'a164c9f6b68a499e858214958170605',
             baseURL: 'https://api.apixu.com/v1/',
-            forecastDays: 5,
+            forecastDays: 10,
             jsonForecast: 'forecast.json',
             jsonSearch: 'search.json',
             coords,
