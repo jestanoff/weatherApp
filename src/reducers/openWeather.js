@@ -4,7 +4,7 @@ import {
     FETCH_OPEN_WEATHER_CURRENT_ERROR,
     FETCH_OPEN_WEATHER_FORECAST_SUCCESS,
     FETCH_OPEN_WEATHER_FORECAST_ERROR,
-} from '../actions';
+} from '../constants/actions';
 
 const initialState = {
     current: {},

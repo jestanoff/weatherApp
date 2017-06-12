@@ -1,4 +1,4 @@
-import { FETCH_SEARCH_ITEMS, SEARCH_ITEMS_SUCCESS, SEARCH_ITEMS_ERROR } from '../actions';
+import { FETCH_SEARCH_ITEMS, SEARCH_ITEMS_SUCCESS, SEARCH_ITEMS_ERROR } from '../constants/actions';
 
 export default function (state = [], { type, payload }) {
     switch (type) {

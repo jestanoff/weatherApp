@@ -2,7 +2,7 @@ import {
     FETCH_APIXU,
     FETCH_APIXU_SUCCESS,
     FETCH_APIXU_ERROR,
-} from '../actions';
+} from '../constants/actions';
 
 const initialState = {
     current: null,

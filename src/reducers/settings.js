@@ -1,4 +1,4 @@
-import { GET_GEOLOCATION_SUCCESS, GET_GEOLOCATION_ERROR, SET_UNITS } from '../actions';
+import { GET_GEOLOCATION_SUCCESS, GET_GEOLOCATION_ERROR, SET_UNITS } from '../constants/actions';
 import { METRIC } from '../constants';
 
 const initialState = {
