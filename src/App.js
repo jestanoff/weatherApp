@@ -5,13 +5,14 @@ import { Route, withRouter } from 'react-router-dom';
 import Location from './components/Location';
 import Search from './components/Search';
 import ForecastNav from './containers/ForecastNav';
-import { getGeolocation } from './actions';
+import { getGeolocation, getSampleColor } from './actions';
 import CurrentWeatherSection from './containers/CurrentWeatherSection';
 import ForecastSection from './containers/ForecastSection';
 
 export class App extends Component {
     componentWillMount() {
         this.props.getGeolocation();
+        this.props.getSampleColor('DarkMuted');
     }
 
     render() {
@@ -22,10 +23,10 @@ export class App extends Component {
                     { isFetching && <div className='loading-spinner'>Loading...</div> }
                     <header>
                         <Location country={ country } name={ name } region={ region } />
-                        <Search />
                     </header>
-                    <nav>
+                    <nav className='nav-container'>
                         { isDataAvailable && <ForecastNav forecastDays={ 5 } /> }
+                        <Search />
                     </nav>
                     { isDataAvailable && <div className='main-container'>
                         <Route path='/' component={ CurrentWeatherSection } />
@@ -40,6 +41,7 @@ export class App extends Component {
 
 App.propTypes = {
     getGeolocation: PropTypes.func.isRequired,
+    getSampleColor: PropTypes.func.isRequired,
     country: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     region: PropTypes.string.isRequired,
@@ -68,4 +70,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default withRouter(connect(mapStateToProps, { getGeolocation })(App));
+export default withRouter(connect(mapStateToProps, { getGeolocation, getSampleColor })(App));

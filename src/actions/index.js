@@ -35,6 +35,10 @@ export const getGeolocationError = error => ({
 });
 export const setUnits = unit => ({ type: actions.SET_UNITS, unit });
 
+export const getSampleColor = colorType => ({ type: actions.GET_SAMPLE_COLOR, colorType });
+export const getSampleColorError = error => ({ type: actions.GET_SAMPLE_COLOR_ERROR, error });
+export const setSampleColor = color => ({ type: actions.SET_SAMPLE_COLOR, color });
+
 export function fetchWeather(units, coords) {
     return (dispatch) => {
         // const openWeather = new OpenWeatherAPI(units, coords);

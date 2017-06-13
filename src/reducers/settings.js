@@ -1,4 +1,4 @@
-import { GET_GEOLOCATION_SUCCESS, GET_GEOLOCATION_ERROR, SET_UNITS } from '../constants/actions';
+import * as actions from '../constants/actions';
 import { METRIC } from '../constants';
 
 const initialState = {
@@ -7,12 +7,13 @@ const initialState = {
         latitude: null,
         longitude: null,
     },
+    sampleColor: null,
     error: '',
 };
 
 export default function (state = initialState, action) {
     switch (action.type) {
-    case GET_GEOLOCATION_SUCCESS:
+    case actions.GET_GEOLOCATION_SUCCESS:
         return {
             ...state,
             coords: {
@@ -20,15 +21,20 @@ export default function (state = initialState, action) {
                 longitude: action.payload.longitude,
             },
         };
-    case SET_UNITS:
+    case actions.SET_UNITS:
         return {
             ...state,
             units: action.unit,
         };
-    case GET_GEOLOCATION_ERROR:
+    case actions.GET_GEOLOCATION_ERROR:
         return {
             ...state,
             error: action.payload,
+        };
+    case actions.SET_SAMPLE_COLOR:
+        return {
+            ...state,
+            sampleColor: action.color,
         };
     default:
         return state;

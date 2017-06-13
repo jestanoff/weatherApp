@@ -31,7 +31,7 @@ const ForecastSection = ({ hours, sunrise, sunset }) => {
 };
 
 ForecastSection.propTypes = {
-    hours: PropTypes.array.isRequired,
+    hours: PropTypes.array.isRequired, // eslint-disable-line
     sunrise: PropTypes.string.isRequired,
     sunset: PropTypes.string.isRequired,
 };

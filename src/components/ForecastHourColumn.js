@@ -12,7 +12,11 @@ const ForecastHourColumn = ({ hour, icon, temp, wind, windDirection }) => (
 );
 
 ForecastHourColumn.propTypes = {
-    hour: PropTypes.string.isRequired,
+    hour: PropTypes.number.isRequired,
+    icon: PropTypes.string.isRequired,
+    temp: PropTypes.number.isRequired,
+    wind: PropTypes.number.isRequired,
+    windDirection: PropTypes.string.isRequired,
 };
 
 export default ForecastHourColumn;
