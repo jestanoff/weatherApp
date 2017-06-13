@@ -25,6 +25,7 @@ export const fetchApixuError = error => (
     { type: actions.FETCH_APIXU_ERROR, error }
 );
 
+export const getGeolocation = () => ({ type: actions.GET_GEOLOCATION });
 export const getGeolocationSuccess = coords => ({
     type: actions.GET_GEOLOCATION_SUCCESS,
     payload: coords,
@@ -64,22 +65,3 @@ export function fetchWeather(units, coords) {
             .catch(error => dispatch(fetchApixuError(error)));
     };
 }
-
-export const getGeolocation = () =>
-    (dispatch, getState) => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                ({ coords: { latitude, longitude } }) => {
-                    dispatch(getGeolocationSuccess({ latitude, longitude }));
-                    dispatch(fetchWeather(getState().settings.units, getState().settings.coords));
-                },
-                (error) => {
-                    dispatch(fetchWeather(getState().settings.units, getState().settings.coords));
-                    dispatch(getGeolocationError(error));
-                },
-            );
-        } else {
-            // Get geolocation by IP
-            dispatch(fetchWeather(getState().settings.units));
-        }
-    };
