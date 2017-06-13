@@ -3,6 +3,9 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import precss from 'precss';
 import autoprefixer from 'autoprefixer';
+import AssetsPlugin from 'assets-webpack-plugin';
+import webpack from 'webpack';
+import CleanWebpackPlugin from 'clean-webpack-plugin';
 
 const srcDir = path.resolve(__dirname, './src');
 const buildDir = path.resolve(__dirname, './public');
@@ -10,11 +13,12 @@ const buildDir = path.resolve(__dirname, './public');
 export default {
     entry: {
         app: [path.join(srcDir, './index.js')],
+        vendor: ['react', 'react-redux', 'react-dom'],
     },
     output: {
         path: buildDir,
-        publicPath: '/assets/',
-        filename: './js/[name].bundle.js',
+        publicPath: '/',
+        filename: './js/[name].bundle-[chunkhash].js',
     },
     module: {
         rules: [
@@ -71,11 +75,25 @@ export default {
         ],
     },
     plugins: [
+        new CleanWebpackPlugin(buildDir),
         new CopyWebpackPlugin([
             { from: path.join(srcDir, './templates', 'index.html'), to: buildDir },
         ]),
         new ExtractTextPlugin({
             filename: './styles/main.css',
+        }),
+        new AssetsPlugin({
+            filename: 'webpack-assets.js',
+            path: path.resolve(buildDir, './js'),
+            prettyPrint: true,
+            // https://medium.com/@matt.krick/a-production-ready-realtime-saas-with-webpack-7b11ba2fa5b0
+            includeManifest: 'manifest',
+            processOutput(assets) {
+                return `window.staticMap =  ${JSON.stringify(assets)}`;
+            },
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: ['vendor', 'manifest'], // Specify the common bundle's name.
         }),
     ],
     context: __dirname,
@@ -88,5 +106,5 @@ export default {
             colors: true,
         },
     },
-    devtool: 'source-map',
+    // devtool: 'source-map',
 };
