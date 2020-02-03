@@ -1,1 +1,2 @@
-# weatherApp
+# Weather App
+Another side project
